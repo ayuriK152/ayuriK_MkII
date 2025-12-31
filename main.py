@@ -20,7 +20,7 @@ botActivity = discord.Game('수용소 감시')
 
 workDir = ''
 if platform.system()!='Windows':
-    workDir = os.getcwd()[0:-5]
+    workDir = os.getcwd()[0:-5]+'/'
 
 channelCsv = pd.read_csv(workDir+'Datas/ChannelList.csv', encoding='UTF-8')
 reactionMsgCsv = pd.read_csv(workDir+'Datas/ReactionMsgLists.csv', encoding='UTF-8')
