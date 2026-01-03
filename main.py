@@ -4,8 +4,8 @@ import pandas as pd
 import numpy
 import os
 import platform
-import requests
-from PIL import Image, ImageSequence
+# import requests
+# from PIL import Image, ImageSequence
 
 
 ############
