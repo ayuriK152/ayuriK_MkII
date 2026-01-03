@@ -137,31 +137,39 @@ async def hello(ctx):
     await ctx.send('안녕하세요')
 
 
-# 이미지 인식 후 png, gif 변환
-@bot.event
-async def on_message(message):
-    await bot.process_commands(message)
+# 이미지 인식 후 png, gif 변환 (기능 사용 일시 중단)
+# 1. 요즘 webp 로컬에서 잘 열리는거 같은데 굳이 필요한 기능인가 싶음.
+# 2. gif 변환 불안정, 용량 제한 등 문제가 더 많음.
+# @bot.event
+# async def on_message(message):
+#     await bot.process_commands(message)
 
-    if message.author.bot:
-        return
+#     if message.author.bot:
+#         return
     
-    # 첨부파일 없는경우 스킵
-    if len(message.attachments) <= 0:
-        return
+#     # 첨부파일 없는경우 스킵
+#     if len(message.attachments) <= 0:
+#         return
     
-    extension = message.attachments[0].filename.split('.')[-1]
+#     extension = message.attachments[0].filename.split('.')[-1]
 
-    # 변환 대상 확장자인지 확인 (webp, jfif)
-    if any(extension in s for s in imageTransferTypes):
-        url = message.attachments[0].url
-        img = Image.open(requests.get(url, stream = True).raw)
-        if (is_animated_media(img) == False or extension == 'jfif'):
-            img.save('Temp/temp.png', format='png')
-            await message.channel.send('이미지 변환 완료! (' + extension + ' -> png)', file = discord.File('Temp/temp.png'))
-        else:
-            frames = [frame.copy() for frame in ImageSequence.Iterator(img)]
-            img.save('Temp/temp.gif', format='gif', save_all = True, append_images = frames)
-            await message.channel.send('이미지 변환 완료! (webp -> gif)', file = discord.File('Temp/temp.gif'))
+#     # 변환 대상 확장자인지 확인 (webp, jfif)
+#     if any(extension in s for s in imageTransferTypes):
+#         url = message.attachments[0].url
+#         img = Image.open(requests.get(url, stream = True).raw)
+
+#         if (is_animated_media(img) == False or extension == 'jfif'):
+#             img.save('Temp/temp.png', format='png')
+#             await message.channel.send('이미지 변환 완료! (' + extension + ' -> png)', file = discord.File('Temp/temp.png'))
+#         else:
+#             frames = [frame.copy() for frame in ImageSequence.Iterator(img)]
+#             img.save('Temp/temp.gif', format='gif', save_all = True, append_images = frames)
+#             fileSize = os.path.getsize('Temp/temp.gif') / (1024 * 1024)
+#             print(fileSize)
+#             if fileSize > 25:
+#                 await message.channel.send('변환된 이미지의 파일이 너무 커요..')
+#             else:
+#                 await message.channel.send('이미지 변환 완료! (webp -> gif)', file = discord.File('Temp/temp.gif'))
 
 
 #####################################################
